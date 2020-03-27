@@ -57,6 +57,7 @@ resource "brightbox_server_group" "jitsi" {
 resource "brightbox_firewall_policy" "jitsi" {
   name         = brightbox_server_group.jitsi.name
   server_group = brightbox_server_group.jitsi.id
+  depends_on   = [brightbox_server_group.jitsi]
 }
 
 resource "brightbox_firewall_rule" "jitsi-tcp" {
@@ -94,6 +95,7 @@ resource "brightbox_server" "jitsi" {
   image     = data.brightbox_image.bionic.id
   type      = var.server_type
   server_groups = [brightbox_server_group.jitsi.id]
+  depends_on    = [brightbox_server_group.jitsi]
 }
 
 resource "null_resource" "configure-jitsi" {
@@ -103,6 +105,8 @@ resource "null_resource" "configure-jitsi" {
     cloudip = brightbox_cloudip.jitsi.public_ip
     jitsi_fqdn = local.jitsi_fqdn
   }
+
+  depends_on = [brightbox_server.jitsi, brightbox_cloudip.jitsi]
 
   connection {
     user = "ubuntu"
