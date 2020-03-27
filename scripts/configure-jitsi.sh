@@ -21,8 +21,8 @@ for fqdn_ip in $FQDN_IPS ; do
     fi
 done
 
+wget -qO - https://download.jitsi.org/jitsi-key.gpg.key | apt-key add -
 apt-add-repository 'deb https://download.jitsi.org stable/' >/dev/null
-wget -qO - https://download.jitsi.org/jitsi-key.gpg.key | sudo apt-key add -
 apt-get install -qy debconf-utils
 
 debconf-set-selections <<EOF
