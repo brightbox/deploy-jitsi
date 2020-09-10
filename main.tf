@@ -96,6 +96,9 @@ resource "brightbox_server" "jitsi" {
   type      = var.server_type
   server_groups = [brightbox_server_group.jitsi.id]
   depends_on    = [brightbox_server_group.jitsi]
+  lifecycle {
+    ignore_changes = [image]
+  }
 }
 
 resource "null_resource" "configure-jitsi" {
