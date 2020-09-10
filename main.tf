@@ -61,7 +61,7 @@ resource "brightbox_firewall_policy" "jitsi" {
 }
 
 resource "brightbox_firewall_rule" "jitsi-tcp" {
-  destination_port = "80,443,4443,22"
+  destination_port = "80,443,4445,4443,22"
   protocol         = "tcp"
   source           = "any"
   description      = "jitsi services"
